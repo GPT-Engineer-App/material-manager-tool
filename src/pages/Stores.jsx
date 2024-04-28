@@ -30,6 +30,7 @@ function Stores() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          apikey: apiKey,
           Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({ name: inputValue }),
