@@ -42,8 +42,9 @@ const Index = () => {
         body: JSON.stringify({ name: newMaterial.name, color: newMaterial.colorCode }),
       })
         .then((response) => response.json())
+        .then((response) => response.json())
         .then((data) => {
-          setMaterials((prevMaterials) => [...prevMaterials, data]);
+          setMaterials((prevMaterials) => [...prevMaterials, { ...newMaterial, id: data.id }]);
           setNewMaterial({ name: "", colorCode: "" });
           toast({
             title: "Material Added",
