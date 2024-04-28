@@ -117,8 +117,8 @@ const Index = () => {
                   </Flex>
                 ) : (
                   <>
-                    <IconButton aria-label="Edit material" icon={<FaEdit />} variant="outline" onClick={() => handleEditMaterial(index)} />
-                    <IconButton aria-label="Delete material" icon={<FaTrash />} variant="outline" onClick={() => handleDeleteMaterial(index)} ml={2} />
+                    <IconButton aria-label="Edit material" icon={<FaEdit />} variant="outline" onClick={() => handleEditMaterial(material.id)} />
+                    <IconButton aria-label="Delete material" icon={<FaTrash />} variant="outline" onClick={() => handleDeleteMaterial(material.id)} ml={2} />
                   </>
                 )}
               </Td>
