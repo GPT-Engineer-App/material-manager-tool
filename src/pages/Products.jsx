@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Text, Input, Button, List, ListItem, IconButton } from "@chakra-ui/react";
+import { Box, Text, Input, Button, List, ListItem, IconButton, Select } from "@chakra-ui/react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 function Products() {
@@ -38,7 +38,10 @@ function Products() {
       <Text fontSize="2xl">Products Page</Text>
       <Box my={4}>
         <Input placeholder="Product Name" value={newProduct.name} onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })} />
-        <Input placeholder="Product Category" value={newProduct.category} onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })} mt={2} />
+        <Select placeholder="Select category" value={newProduct.category} onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })} mt={2}>
+          <option value="Dress">Dress</option>
+          <option value="Abaya">Abaya</option>
+        </Select>
         <Button onClick={handleAddProduct} colorScheme="blue" mt={2}>
           Add Product
         </Button>
@@ -49,7 +52,10 @@ function Products() {
             {editingIndex === index ? (
               <>
                 <Input value={editingProduct.name} onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })} />
-                <Input value={editingProduct.category} onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })} mt={2} />
+                <Select value={editingProduct.category} onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })} mt={2}>
+                  <option value="Dress">Dress</option>
+                  <option value="Abaya">Abaya</option>
+                </Select>
                 <Button onClick={handleUpdateProduct} colorScheme="green" mt={2}>
                   Update
                 </Button>
