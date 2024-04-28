@@ -8,33 +8,32 @@ const Index = () => {
   const toast = useToast();
 
   const handleAddMaterial = () => {
-    if (!newMaterial.name || !newMaterial.colorCode) {
+    if (newMaterial.name.trim() === "" || newMaterial.colorCode.trim() === "") {
       toast({
         title: "Error",
-        description: "Please fill in all fields.",
+        description: "All fields must be filled.",
         status: "error",
         duration: 2000,
         isClosable: true,
       });
-      return;
+    } else {
+      setMaterials((prevMaterials) => [...prevMaterials, { ...newMaterial, id: Date.now() }]);
+      setNewMaterial({ name: "", colorCode: "" });
+      toast({
+        title: "Material Added",
+        description: "The material has been added successfully.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
     }
-    setMaterials([...materials, newMaterial]);
-    setNewMaterial({ name: "", colorCode: "" });
-    toast({
-      title: "Success",
-      description: "Material added successfully.",
-      status: "success",
-      duration: 2000,
-      isClosable: true,
-    });
   };
 
-  const handleDeleteMaterial = (index) => {
-    const updatedMaterials = materials.filter((_, i) => i !== index);
-    setMaterials(updatedMaterials);
+  const handleDeleteMaterial = (materialId) => {
+    setMaterials((prevMaterials) => prevMaterials.filter((material) => material.id !== materialId));
     toast({
-      title: "Deleted",
-      description: "Material removed successfully.",
+      title: "Material Deleted",
+      description: "The material has been removed.",
       status: "info",
       duration: 2000,
       isClosable: true,
@@ -44,19 +43,35 @@ const Index = () => {
   const [editingIndex, setEditingIndex] = useState(-1);
   const [editingMaterial, setEditingMaterial] = useState({ name: "", colorCode: "" });
 
-  const handleEditMaterial = (index) => {
-    if (materials[index]) {
-      setEditingIndex(index);
-      setEditingMaterial(materials[index]);
+  const handleEditMaterial = (materialId) => {
+    const material = materials.find((m) => m.id === materialId);
+    if (material) {
+      setEditingIndex(materials.indexOf(material));
+      setEditingMaterial({ ...material });
     }
   };
 
   const handleUpdateMaterial = () => {
-    const updatedMaterials = [...materials];
-    updatedMaterials[editingIndex] = editingMaterial;
-    setMaterials(updatedMaterials);
-    setEditingIndex(-1);
-    setEditingMaterial({ name: "", colorCode: "" });
+    if (editingMaterial.name.trim() === "" || editingMaterial.colorCode.trim() === "") {
+      toast({
+        title: "Error",
+        description: "All fields must be filled.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    } else {
+      setMaterials((prevMaterials) => prevMaterials.map((material) => (material.id === editingMaterial.id ? editingMaterial : material)));
+      setEditingIndex(-1);
+      setEditingMaterial({ name: "", colorCode: "" });
+      toast({
+        title: "Material Updated",
+        description: "The material has been updated successfully.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
