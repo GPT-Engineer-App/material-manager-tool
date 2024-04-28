@@ -4,6 +4,7 @@ import NavigationHeader from "./components/NavigationHeader";
 import Home from "./pages/Home";
 import Stores from "./pages/Stores";
 import Products from "./pages/Products";
+import Stock from "./pages/Stock";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/materials" element={<Index />} />
         <Route path="/stores" element={<Stores />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/stock" element={<Stock />} />
       </Routes>
     </Router>
   );

@@ -17,6 +17,9 @@ function NavigationHeader() {
         <Link as={RouterLink} to="/products" px="4">
           Products
         </Link>
+        <Link as={RouterLink} to="/stock" px="4">
+          Stock
+        </Link>
       </Box>
     </Flex>
   );
