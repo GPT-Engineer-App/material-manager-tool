@@ -100,30 +100,30 @@ const Index = () => {
         <Tbody>
           {materials.map((material, index) => (
             <Tr key={index}>
-              <Td>{material.name}</Td>
-              <Td>{material.colorCode}</Td>
-              <Td>
-                {editingIndex === index ? (
-                  <>
-                    <Td>
-                      <Input value={editingMaterial.name} onChange={(e) => setEditingMaterial({ ...editingMaterial, name: e.target.value })} />
-                    </Td>
-                    <Td>
-                      <Input value={editingMaterial.colorCode} onChange={(e) => setEditingMaterial({ ...editingMaterial, colorCode: e.target.value })} />
-                    </Td>
-                    <Td>
-                      <Button onClick={handleUpdateMaterial} colorScheme="green" ml="2">
-                        Save
-                      </Button>
-                    </Td>
-                  </>
-                ) : (
-                  <>
+              {editingIndex === index ? (
+                <>
+                  <Td>
+                    <Input value={editingMaterial.name} onChange={(e) => setEditingMaterial({ ...editingMaterial, name: e.target.value })} />
+                  </Td>
+                  <Td>
+                    <Input value={editingMaterial.colorCode} onChange={(e) => setEditingMaterial({ ...editingMaterial, colorCode: e.target.value })} />
+                  </Td>
+                  <Td>
+                    <Button onClick={handleUpdateMaterial} colorScheme="green" ml="2">
+                      Save
+                    </Button>
+                  </Td>
+                </>
+              ) : (
+                <>
+                  <Td>{material.name}</Td>
+                  <Td>{material.colorCode}</Td>
+                  <Td>
                     <IconButton aria-label="Edit material" icon={<FaEdit />} variant="outline" onClick={() => handleEditMaterial(material.id)} />
                     <IconButton aria-label="Delete material" icon={<FaTrash />} variant="outline" onClick={() => handleDeleteMaterial(material.id)} ml={2} />
-                  </>
-                )}
-              </Td>
+                  </Td>
+                </>
+              )}
             </Tr>
           ))}
         </Tbody>
