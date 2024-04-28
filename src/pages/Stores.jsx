@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Input, Button, List, ListItem, ListIcon, IconButton } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 
@@ -6,14 +6,41 @@ import { FaEdit } from "react-icons/fa";
 
 function Stores() {
   const [stores, setStores] = useState([]);
+  const apiUrl = "https://onzqccelfknbthepvesf.supabase.co/rest/v1/stores";
+  const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uenFjY2VsZmtuYnRoZXB2ZXNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQzMDQyMzUsImV4cCI6MjAyOTg4MDIzNX0.t7wOjwXFl0fFh2-N-59WT7090CwMTn8YBwWR1Z1_TUQ";
+  useEffect(() => {
+    fetch(apiUrl, {
+      headers: {
+        "Content-Type": "application/json",
+        apikey: apiKey,
+        Authorization: `Bearer ${apiKey}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setStores(data))
+      .catch((error) => console.error("Error fetching stores:", error));
+  }, []);
   const [inputValue, setInputValue] = useState("");
   const [editingIndex, setEditingIndex] = useState(-1);
   const [editingValue, setEditingValue] = useState("");
 
   const handleAddStore = () => {
     if (inputValue.trim() !== "") {
-      setStores([...stores, inputValue]);
-      setInputValue("");
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: apiKey,
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({ name: inputValue }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setStores((prevStores) => [...prevStores, { ...inputValue, id: data.id }]);
+          setInputValue("");
+        })
+        .catch((error) => console.error("Error adding store:", error));
     }
   };
 
@@ -32,8 +59,19 @@ function Stores() {
 
   const handleDeleteStore = (index) => {
     if (editingIndex !== index) {
-      const newStores = stores.filter((_, i) => i !== index);
-      setStores(newStores);
+      fetch(`${apiUrl}?id=eq.${stores[index].id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: apiKey,
+          Authorization: `Bearer ${apiKey}`,
+        },
+      })
+        .then(() => {
+          const updatedStores = stores.filter((_, i) => i !== index);
+          setStores(updatedStores);
+        })
+        .catch((error) => console.error("Error deleting store:", error));
     }
   };
 
