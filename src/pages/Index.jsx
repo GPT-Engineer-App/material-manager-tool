@@ -87,13 +87,17 @@ const Index = () => {
               <Td>{material.colorCode}</Td>
               <Td>
                 {editingIndex === index ? (
-                  <>
+                  <Box d="flex" alignItems="center">
+                    <Text mr={2}>{material.name}</Text>
                     <Input value={editingMaterial.name} onChange={(e) => setEditingMaterial({ ...editingMaterial, name: e.target.value })} />
+                    <Text mr={2} ml={4}>
+                      {material.colorCode}
+                    </Text>
                     <Input value={editingMaterial.colorCode} onChange={(e) => setEditingMaterial({ ...editingMaterial, colorCode: e.target.value })} ml={2} />
                     <Button onClick={handleUpdateMaterial} colorScheme="green" ml={2}>
                       Save
                     </Button>
-                  </>
+                  </Box>
                 ) : (
                   <>
                     <IconButton aria-label="Edit material" icon={<FaEdit />} variant="outline" onClick={() => handleEditMaterial(index)} />
