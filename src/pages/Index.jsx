@@ -104,13 +104,19 @@ const Index = () => {
               <Td>{material.colorCode}</Td>
               <Td>
                 {editingIndex === index ? (
-                  <Flex alignItems="center" gap="2">
-                    <Input value={editingMaterial.name} onChange={(e) => setEditingMaterial({ ...editingMaterial, name: e.target.value })} />
-                    <Input value={editingMaterial.colorCode} onChange={(e) => setEditingMaterial({ ...editingMaterial, colorCode: e.target.value })} />
-                    <Button onClick={handleUpdateMaterial} colorScheme="green" ml="2">
-                      Save
-                    </Button>
-                  </Flex>
+                  <>
+                    <Td>
+                      <Input value={editingMaterial.name} onChange={(e) => setEditingMaterial({ ...editingMaterial, name: e.target.value })} />
+                    </Td>
+                    <Td>
+                      <Input value={editingMaterial.colorCode} onChange={(e) => setEditingMaterial({ ...editingMaterial, colorCode: e.target.value })} />
+                    </Td>
+                    <Td>
+                      <Button onClick={handleUpdateMaterial} colorScheme="green" ml="2">
+                        Save
+                      </Button>
+                    </Td>
+                  </>
                 ) : (
                   <>
                     <IconButton aria-label="Edit material" icon={<FaEdit />} variant="outline" onClick={() => handleEditMaterial(material.id)} />
