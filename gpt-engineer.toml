@@ -3,3 +3,6 @@ build = "npm run build"
 
 [gptengineer-app]
 project_id = "2531ace0-b918-47f1-a0f4-670cee6bb2b9"
+
+[[gptengineer-app.openapi]]
+url = "https://onzqccelfknbthepvesf.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uenFjY2VsZmtuYnRoZXB2ZXNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQzMDQyMzUsImV4cCI6MjAyOTg4MDIzNX0.t7wOjwXFl0fFh2-N-59WT7090CwMTn8YBwWR1Z1_TUQ"
