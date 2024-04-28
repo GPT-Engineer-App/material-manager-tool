@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Flex, FormControl, FormLabel, Input, Table, Thead, Tbody, Tr, Th, Td, IconButton, useToast, Text } from "@chakra-ui/react";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 const Index = () => {
   const [materials, setMaterials] = useState([]);
+  const apiUrl = "https://onzqccelfknbthepvesf.supabase.co/rest/v1/materials";
+  const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uenFjY2VsZmtuYnRoZXB2ZXNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQzMDQyMzUsImV4cCI6MjAyOTg4MDIzNX0.t7wOjwXFl0fFh2-N-59WT7090CwMTn8YBwWR1Z1_TUQ";
+
+  useEffect(() => {
+    fetch(apiUrl, {
+      headers: {
+        "Content-Type": "application/json",
+        apikey: apiKey,
+        Authorization: `Bearer ${apiKey}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setMaterials(data))
+      .catch((error) => console.error("Error fetching materials:", error));
+  }, []);
   const [newMaterial, setNewMaterial] = useState({ name: "", colorCode: "" });
   const toast = useToast();
 
@@ -17,7 +32,28 @@ const Index = () => {
         isClosable: true,
       });
     } else {
-      setMaterials((prevMaterials) => [...prevMaterials, { ...newMaterial, id: Date.now() }]);
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: apiKey,
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify(newMaterial),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setMaterials((prevMaterials) => [...prevMaterials, data]);
+          setNewMaterial({ name: "", colorCode: "" });
+          toast({
+            title: "Material Added",
+            description: "The material has been added successfully.",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+          });
+        })
+        .catch((error) => console.error("Error adding material:", error));
       setNewMaterial({ name: "", colorCode: "" });
       toast({
         title: "Material Added",
@@ -30,7 +66,25 @@ const Index = () => {
   };
 
   const handleDeleteMaterial = (materialId) => {
-    setMaterials((prevMaterials) => prevMaterials.filter((material) => material.id !== materialId));
+    fetch(`${apiUrl}?id=eq.${materialId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: apiKey,
+        Authorization: `Bearer ${apiKey}`,
+      },
+    })
+      .then(() => {
+        setMaterials((prevMaterials) => prevMaterials.filter((material) => material.id !== materialId));
+        toast({
+          title: "Material Deleted",
+          description: "The material has been removed.",
+          status: "info",
+          duration: 2000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => console.error("Error deleting material:", error));
     toast({
       title: "Material Deleted",
       description: "The material has been removed.",
@@ -61,7 +115,28 @@ const Index = () => {
         isClosable: true,
       });
     } else {
-      setMaterials((prevMaterials) => prevMaterials.map((material) => (material.id === editingMaterial.id ? editingMaterial : material)));
+      fetch(`${apiUrl}?id=eq.${editingMaterial.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: apiKey,
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify(editingMaterial),
+      })
+        .then(() => {
+          setMaterials((prevMaterials) => prevMaterials.map((material) => (material.id === editingMaterial.id ? editingMaterial : material)));
+          setEditingIndex(-1);
+          setEditingMaterial({ name: "", colorCode: "" });
+          toast({
+            title: "Material Updated",
+            description: "The material has been updated successfully.",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+          });
+        })
+        .catch((error) => console.error("Error updating material:", error));
       setEditingIndex(-1);
       setEditingMaterial({ name: "", colorCode: "" });
       toast({
