@@ -41,10 +41,20 @@ const Index = () => {
     });
   };
 
-  const handleEditMaterial = (index, material) => {
+  const [editingIndex, setEditingIndex] = useState(-1);
+  const [editingMaterial, setEditingMaterial] = useState({ name: "", colorCode: "" });
+
+  const handleEditMaterial = (index) => {
+    setEditingIndex(index);
+    setEditingMaterial(materials[index]);
+  };
+
+  const handleUpdateMaterial = () => {
     const updatedMaterials = [...materials];
-    updatedMaterials[index] = material;
+    updatedMaterials[editingIndex] = editingMaterial;
     setMaterials(updatedMaterials);
+    setEditingIndex(-1);
+    setEditingMaterial({ name: "", colorCode: "" });
   };
 
   return (
@@ -76,8 +86,20 @@ const Index = () => {
               <Td>{material.name}</Td>
               <Td>{material.colorCode}</Td>
               <Td>
-                <IconButton aria-label="Edit material" icon={<FaEdit />} variant="outline" onClick={() => handleEditMaterial(index, material)} />
-                <IconButton aria-label="Delete material" icon={<FaTrash />} variant="outline" onClick={() => handleDeleteMaterial(index)} ml={2} />
+                {editingIndex === index ? (
+                  <>
+                    <Input value={editingMaterial.name} onChange={(e) => setEditingMaterial({ ...editingMaterial, name: e.target.value })} />
+                    <Input value={editingMaterial.colorCode} onChange={(e) => setEditingMaterial({ ...editingMaterial, colorCode: e.target.value })} ml={2} />
+                    <Button onClick={handleUpdateMaterial} colorScheme="green" ml={2}>
+                      Save
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <IconButton aria-label="Edit material" icon={<FaEdit />} variant="outline" onClick={() => handleEditMaterial(index)} />
+                    <IconButton aria-label="Delete material" icon={<FaTrash />} variant="outline" onClick={() => handleDeleteMaterial(index)} ml={2} />
+                  </>
+                )}
               </Td>
             </Tr>
           ))}
