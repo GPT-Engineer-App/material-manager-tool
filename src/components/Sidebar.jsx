@@ -1,9 +1,9 @@
-import React from "react";
-import { Box, Drawer, DrawerContent, useDisclosure } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Box, Drawer, DrawerContent, useDisclosure } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 function Sidebar() {
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
       <DrawerContent>
