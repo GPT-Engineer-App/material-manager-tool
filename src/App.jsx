@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Index from "./pages/Index.jsx";
 import NavigationHeader from "./components/NavigationHeader";
 import Home from "./pages/Home";
+import Stores from "./pages/Stores";
 
 function App() {
   return (
