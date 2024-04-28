@@ -17,7 +17,14 @@ function Stores() {
       },
     })
       .then((response) => response.json())
-      .then((data) => setStores(data))
+      .then((data) =>
+        setStores(
+          data.map((store) => ({
+            ...store,
+            createdAt: new Date(store.created_at).toLocaleDateString("en-US"),
+          })),
+        ),
+      )
       .catch((error) => console.error("Error fetching stores:", error));
   }, []);
   const [inputValue, setInputValue] = useState("");
@@ -84,7 +91,7 @@ function Stores() {
       <List spacing={3} mt={4}>
         {stores.map((store, index) => (
           <ListItem key={index} d="flex" alignItems="center" justifyContent="space-between">
-            {editingIndex === index ? <Input value={editingValue} onChange={(e) => setEditingValue(e.target.value)} size="sm" /> : store}
+            {editingIndex === index ? <Input value={editingValue} onChange={(e) => setEditingValue(e.target.value)} size="sm" /> : `${store.name} - Created on: ${store.createdAt}`}
             <IconButton icon={<FaEdit />} onClick={() => handleEditStore(index, store)} aria-label="Edit store" colorScheme="yellow" variant="outline" mr={2} />
             <IconButton icon={<FaTrash />} onClick={() => handleDeleteStore(index)} aria-label="Delete store" colorScheme="red" variant="outline" />
           </ListItem>
