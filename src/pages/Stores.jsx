@@ -42,11 +42,10 @@ function Stores() {
         },
         body: JSON.stringify({ name: inputValue }),
       })
-        .then((response) => {
-          if (response.status === 201) {
-            return response.json().then((data) => data || {});
-          }
-          return {};
+        .then((response) => response.json())
+        .then((data) => {
+          setStores((prevStores) => [...prevStores, { ...data, createdAt: new Date(data.created_at).toLocaleDateString("en-US") }]);
+          setInputValue("");
         })
         .then((data) => {
           setStores((prevStores) => [...prevStores, { ...inputValue, id: data.id }]);
