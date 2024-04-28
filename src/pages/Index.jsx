@@ -45,8 +45,10 @@ const Index = () => {
   const [editingMaterial, setEditingMaterial] = useState({ name: "", colorCode: "" });
 
   const handleEditMaterial = (index) => {
-    setEditingIndex(index);
-    setEditingMaterial(materials[index]);
+    if (materials[index]) {
+      setEditingIndex(index);
+      setEditingMaterial(materials[index]);
+    }
   };
 
   const handleUpdateMaterial = () => {
