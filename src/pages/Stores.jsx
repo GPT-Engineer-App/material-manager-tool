@@ -84,7 +84,7 @@ function Stores() {
 
   return (
     <Box p={5}>
-      <Input placeholder="Enter store name" value={inputValue} onChange={(e) => setInputValue(e.target.value)} mb={2} />
+      <Input placeholder="Enter store name" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyPress={(e) => e.key === "Enter" && handleAddStore()} mb={2} />
       <Button onClick={handleAddStore} colorScheme="blue">
         Add Store
       </Button>
