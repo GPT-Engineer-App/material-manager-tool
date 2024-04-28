@@ -6,10 +6,11 @@ import Home from "./pages/Home";
 function App() {
   return (
     <Router>
-      <Sidebar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="materials" element={<Index />} />
+        <Route path="/" element={<Sidebar />}>
+          <Route index element={<Home />} />
+          <Route path="materials" element={<Index />} />
+        </Route>
       </Routes>
     </Router>
   );
