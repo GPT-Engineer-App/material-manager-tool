@@ -104,13 +104,9 @@ const Index = () => {
               <Td>{material.colorCode}</Td>
               <Td>
                 {editingIndex === index ? (
-                  <Flex alignItems="center">
-                    <Text mr="2">{material.name}</Text>
+                  <Flex alignItems="center" gap="2">
                     <Input value={editingMaterial.name} onChange={(e) => setEditingMaterial({ ...editingMaterial, name: e.target.value })} />
-                    <Text mr="2" ml="4">
-                      {material.colorCode}
-                    </Text>
-                    <Input value={editingMaterial.colorCode} onChange={(e) => setEditingMaterial({ ...editingMaterial, colorCode: e.target.value })} ml="2" />
+                    <Input value={editingMaterial.colorCode} onChange={(e) => setEditingMaterial({ ...editingMaterial, colorCode: e.target.value })} />
                     <Button onClick={handleUpdateMaterial} colorScheme="green" ml="2">
                       Save
                     </Button>
