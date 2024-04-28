@@ -76,8 +76,8 @@ const Index = () => {
               <Td>{material.name}</Td>
               <Td>{material.colorCode}</Td>
               <Td>
-                <IconButton aria-label="Edit material" icon={<FaEdit />} onClick={() => handleEditMaterial(index, material)} />
-                <IconButton aria-label="Delete material" icon={<FaTrash />} onClick={() => handleDeleteMaterial(index)} ml={2} />
+                <IconButton aria-label="Edit material" icon={<FaEdit />} variant="outline" onClick={() => handleEditMaterial(index, material)} />
+                <IconButton aria-label="Delete material" icon={<FaTrash />} variant="outline" onClick={() => handleDeleteMaterial(index)} ml={2} />
               </Td>
             </Tr>
           ))}

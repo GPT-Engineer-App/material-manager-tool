@@ -47,8 +47,8 @@ function Stores() {
         {stores.map((store, index) => (
           <ListItem key={index} d="flex" alignItems="center" justifyContent="space-between">
             {editingIndex === index ? <Input value={editingValue} onChange={(e) => setEditingValue(e.target.value)} size="sm" /> : store}
-            <IconButton icon={<FaEdit />} onClick={() => handleEditStore(index, store)} aria-label="Edit store" colorScheme="yellow" mr={2} />
-            <IconButton icon={<FaTrash />} onClick={() => handleDeleteStore(index)} aria-label="Delete store" colorScheme="red" />
+            <IconButton icon={<FaEdit />} onClick={() => handleEditStore(index, store)} aria-label="Edit store" colorScheme="yellow" variant="outline" mr={2} />
+            <IconButton icon={<FaTrash />} onClick={() => handleDeleteStore(index)} aria-label="Delete store" colorScheme="red" variant="outline" />
           </ListItem>
         ))}
       </List>
