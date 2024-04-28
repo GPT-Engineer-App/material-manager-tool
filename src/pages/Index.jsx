@@ -16,7 +16,7 @@ const Index = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => setMaterials(data))
+      .then((data) => setMaterials(data.map((item) => ({ ...item, colorCode: item.color }))))
       .catch((error) => console.error("Error fetching materials:", error));
   }, []);
   const [newMaterial, setNewMaterial] = useState({ name: "", colorCode: "" });
@@ -39,7 +39,7 @@ const Index = () => {
           apikey: apiKey,
           Authorization: `Bearer ${apiKey}`,
         },
-        body: JSON.stringify(newMaterial),
+        body: JSON.stringify({ name: newMaterial.name, color: newMaterial.colorCode }),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -122,7 +122,7 @@ const Index = () => {
           apikey: apiKey,
           Authorization: `Bearer ${apiKey}`,
         },
-        body: JSON.stringify(editingMaterial),
+        body: JSON.stringify({ name: editingMaterial.name, color: editingMaterial.colorCode }),
       })
         .then(() => {
           setMaterials((prevMaterials) => prevMaterials.map((material) => (material.id === editingMaterial.id ? editingMaterial : material)));
